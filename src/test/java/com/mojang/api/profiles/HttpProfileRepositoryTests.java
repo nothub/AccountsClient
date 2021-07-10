@@ -4,20 +4,15 @@ import com.google.gson.Gson;
 import com.mojang.api.http.HttpBody;
 import com.mojang.api.http.HttpClient;
 import com.mojang.api.http.HttpHeader;
-import org.hamcrest.CoreMatchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
-
 
 import java.io.IOException;
 import java.net.URL;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItemInArray;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -40,9 +35,9 @@ public class HttpProfileRepositoryTests {
 
         Profile[] actual = repository.findProfilesByNames("someName", "someOtherName");
 
-        assertThat(actual.length, is(equalTo(2)));
-        assertThat(actual, hasItemInArray(hasProperty("name", CoreMatchers.is("someName"))));
-        assertThat(actual, hasItemInArray(hasProperty("name", CoreMatchers.is("someOtherName"))));
+        Assertions.assertEquals(actual.length, 2);
+        Assertions.assertEquals(actual[0].getName(), "someName");
+        Assertions.assertEquals(actual[1].getName(), "someOtherName");
     }
 
     private void setProfilesForUrl(HttpClient mock, URL url, Profile[] profiles) throws IOException {

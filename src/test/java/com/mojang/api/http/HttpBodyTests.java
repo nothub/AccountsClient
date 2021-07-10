@@ -1,10 +1,7 @@
 package com.mojang.api.http;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 public class HttpBodyTests {
 
@@ -16,7 +13,7 @@ public class HttpBodyTests {
 
         byte[] actual = body.getBytes();
 
-        assertThat(actual, is(equalTo(expected)));
+        Assertions.assertArrayEquals(actual, expected);
     }
 
     @Test
@@ -26,7 +23,7 @@ public class HttpBodyTests {
 
         byte[] actual = body.getBytes();
 
-        assertThat(actual, is(equalTo(expected)));
+        Assertions.assertArrayEquals(actual, expected);
     }
 
 }
