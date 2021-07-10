@@ -3,24 +3,19 @@ package com.mojang.api.profiles;
 import com.google.gson.Gson;
 import com.mojang.api.http.HttpBody;
 import com.mojang.api.http.HttpClient;
-import org.hamcrest.CoreMatchers;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import com.mojang.api.http.HttpHeader;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 
 import java.io.IOException;
 import java.net.URL;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItemInArray;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@RunWith(JUnit4.class)
 public class HttpProfileRepositoryTests {
 
     private HttpClient client;
@@ -40,14 +35,14 @@ public class HttpProfileRepositoryTests {
 
         Profile[] actual = repository.findProfilesByNames("someName", "someOtherName");
 
-        assertThat(actual.length, is(equalTo(2)));
-        assertThat(actual, hasItemInArray(hasProperty("name", CoreMatchers.is("someName"))));
-        assertThat(actual, hasItemInArray(hasProperty("name", CoreMatchers.is("someOtherName"))));
+        Assertions.assertEquals(2, actual.length);
+        Assertions.assertEquals("someName", actual[0].getName());
+        Assertions.assertEquals("someOtherName", actual[1].getName());
     }
 
     private void setProfilesForUrl(HttpClient mock, URL url, Profile[] profiles) throws IOException {
         String jsonString = gson.toJson(profiles);
-        when(mock.post(eq(url), any(HttpBody.class), anyList())).thenReturn(jsonString);
+        when(mock.post(eq(url), any(HttpBody.class), ArgumentMatchers.<HttpHeader>anyList())).thenReturn(jsonString);
     }
 
     private static Profile getProfile(String name) {

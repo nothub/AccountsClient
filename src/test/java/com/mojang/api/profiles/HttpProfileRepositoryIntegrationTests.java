@@ -1,15 +1,9 @@
 package com.mojang.api.profiles;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.fail;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
 public class HttpProfileRepositoryIntegrationTests {
 
     @Test
@@ -18,9 +12,9 @@ public class HttpProfileRepositoryIntegrationTests {
 
         Profile[] profiles = repository.findProfilesByNames("mollstam");
 
-        assertThat(profiles.length, is(1));
-        assertThat(profiles[0].getName(), is(equalTo("mollstam")));
-        assertThat(profiles[0].getId(), is(equalTo("f8cdb6839e9043eea81939f85d9c5d69")));
+        Assertions.assertEquals(1, profiles.length);
+        Assertions.assertEquals("mollstam", profiles[0].getName());
+        Assertions.assertEquals("f8cdb6839e9043eea81939f85d9c5d69", profiles[0].getId());
     }
 
     @Test
@@ -29,11 +23,11 @@ public class HttpProfileRepositoryIntegrationTests {
 
         Profile[] profiles = repository.findProfilesByNames("mollstam", "KrisJelbring");
 
-        assertThat(profiles.length, is(2));
-        assertThat(profiles[0].getName(), is(equalTo("mollstam")));
-        assertThat(profiles[0].getId(), is(equalTo("f8cdb6839e9043eea81939f85d9c5d69")));
-        assertThat(profiles[1].getName(), is(equalTo("KrisJelbring")));
-        assertThat(profiles[1].getId(), is(equalTo("7125ba8b1c864508b92bb5c042ccfe2b")));
+        Assertions.assertEquals(2, profiles.length, 2);
+        Assertions.assertEquals("mollstam", profiles[1].getName());
+        Assertions.assertEquals("f8cdb6839e9043eea81939f85d9c5d69", profiles[1].getId());
+        Assertions.assertEquals("KrisJelbring", profiles[0].getName());
+        Assertions.assertEquals("7125ba8b1c864508b92bb5c042ccfe2b", profiles[0].getId());
     }
 
     @Test
@@ -42,6 +36,6 @@ public class HttpProfileRepositoryIntegrationTests {
 
         Profile[] profiles = repository.findProfilesByNames("doesnotexist$*not even legal");
 
-        assertThat(profiles.length, is(0));
+        Assertions.assertEquals(0, profiles.length);
     }
 }
