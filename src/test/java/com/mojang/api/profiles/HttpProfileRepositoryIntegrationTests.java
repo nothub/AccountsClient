@@ -1,15 +1,12 @@
 package com.mojang.api.profiles;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.fail;
 
-@RunWith(JUnit4.class)
 public class HttpProfileRepositoryIntegrationTests {
 
     @Test

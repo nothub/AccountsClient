@@ -3,10 +3,11 @@ package com.mojang.api.profiles;
 import com.google.gson.Gson;
 import com.mojang.api.http.HttpBody;
 import com.mojang.api.http.HttpClient;
+import com.mojang.api.http.HttpHeader;
 import org.hamcrest.CoreMatchers;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,7 +21,6 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@RunWith(JUnit4.class)
 public class HttpProfileRepositoryTests {
 
     private HttpClient client;
@@ -47,7 +47,7 @@ public class HttpProfileRepositoryTests {
 
     private void setProfilesForUrl(HttpClient mock, URL url, Profile[] profiles) throws IOException {
         String jsonString = gson.toJson(profiles);
-        when(mock.post(eq(url), any(HttpBody.class), anyList())).thenReturn(jsonString);
+        when(mock.post(eq(url), any(HttpBody.class), ArgumentMatchers.<HttpHeader>anyList())).thenReturn(jsonString);
     }
 
     private static Profile getProfile(String name) {
