@@ -13,7 +13,7 @@ public class HttpBodyTests {
 
         byte[] actual = body.getBytes();
 
-        Assertions.assertArrayEquals(actual, expected);
+        Assertions.assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -23,7 +23,7 @@ public class HttpBodyTests {
 
         byte[] actual = body.getBytes();
 
-        Assertions.assertArrayEquals(actual, expected);
+        Assertions.assertArrayEquals(expected, actual);
     }
 
 }

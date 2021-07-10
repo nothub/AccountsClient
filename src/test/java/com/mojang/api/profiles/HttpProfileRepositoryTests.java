@@ -35,9 +35,9 @@ public class HttpProfileRepositoryTests {
 
         Profile[] actual = repository.findProfilesByNames("someName", "someOtherName");
 
-        Assertions.assertEquals(actual.length, 2);
-        Assertions.assertEquals(actual[0].getName(), "someName");
-        Assertions.assertEquals(actual[1].getName(), "someOtherName");
+        Assertions.assertEquals(2, actual.length);
+        Assertions.assertEquals("someName", actual[0].getName());
+        Assertions.assertEquals("someOtherName", actual[1].getName());
     }
 
     private void setProfilesForUrl(HttpClient mock, URL url, Profile[] profiles) throws IOException {
