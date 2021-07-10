@@ -2,7 +2,7 @@ package com.mojang.api.http;
 
 public class HttpBody {
 
-    private String bodyString;
+    private final String bodyString;
 
     public HttpBody(String bodyString) {
         this.bodyString = bodyString;

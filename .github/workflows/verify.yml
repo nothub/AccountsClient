@@ -9,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        java: [ 8 ] # [ 8, 11, 16 ]
+        java: [ 8, 11, 16 ]
         os: [ ubuntu-latest, windows-latest ]
       fail-fast: true
 
@@ -21,7 +21,7 @@ jobs:
       - name: Java
         uses: actions/setup-java@v2.1.0
         with:
-          java-version: 8 # ${{ matrix.java }}
+          java-version: ${{ matrix.java }}
           distribution: 'adopt'
           check-latest: true
 

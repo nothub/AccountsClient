@@ -11,7 +11,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 public class HttpProfileRepository implements ProfileRepository {
@@ -19,9 +18,9 @@ public class HttpProfileRepository implements ProfileRepository {
     // You're not allowed to request more than 100 profiles per go.
     private static final int PROFILES_PER_REQUEST = 100;
 
-    private static Gson gson = new Gson();
+    private static final Gson gson = new Gson();
     private final String agent;
-    private HttpClient client;
+    private final HttpClient client;
 
     public HttpProfileRepository(String agent) {
         this(agent, BasicHttpClient.getInstance());
@@ -34,10 +33,10 @@ public class HttpProfileRepository implements ProfileRepository {
 
     @Override
     public Profile[] findProfilesByNames(String... names) {
-        List<Profile> profiles = new ArrayList<Profile>();
+        List<Profile> profiles = new ArrayList<>();
         try {
 
-            List<HttpHeader> headers = new ArrayList<HttpHeader>();
+            List<HttpHeader> headers = new ArrayList<>();
             headers.add(new HttpHeader("Content-Type", "application/json"));
 
             int namesCount = names.length;
@@ -60,7 +59,7 @@ public class HttpProfileRepository implements ProfileRepository {
             // TODO: logging and allowing consumer to react?
         }
 
-        return profiles.toArray(new Profile[profiles.size()]);
+        return profiles.toArray(new Profile[0]);
     }
 
     private URL getProfilesUrl() throws MalformedURLException {

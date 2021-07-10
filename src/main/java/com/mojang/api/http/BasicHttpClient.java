@@ -52,7 +52,7 @@ public class BasicHttpClient implements HttpClient {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         String line;
-        StringBuffer response = new StringBuffer();
+        StringBuilder response = new StringBuilder();
 
         while ((line = reader.readLine()) != null) {
             response.append(line);

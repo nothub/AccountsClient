@@ -13,7 +13,7 @@
   <url>https://github.com/nothub/AccountsClient</url>
 
   <properties>
-    <java.version>1.6</java.version>
+    <java.version>1.8</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -73,11 +73,6 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.3.0</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-gpg-plugin</artifactId>
           <version>3.0.1</version>
         </plugin>
@@ -85,9 +80,8 @@
     </pluginManagement>
 
     <plugins>
-
+      <!-- require minimum maven & java version, check for common dependency problems -->
       <plugin>
-        <!-- require minimum maven & java version, check for common dependency problems -->
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
         <executions>
@@ -98,7 +92,6 @@
             </goals>
             <configuration>
               <rules>
-                <!-- https://maven.apache.org/enforcer/enforcer-rules/index.html -->
                 <requireMavenVersion>
                   <version>[3.6,)</version>
                 </requireMavenVersion>
@@ -116,7 +109,6 @@
           </execution>
         </executions>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -125,13 +117,12 @@
           <target>${java.version}</target>
         </configuration>
       </plugin>
-
+      <!-- run tests -->
       <plugin>
-        <!-- run tests -->
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
       </plugin>
-
     </plugins>
   </build>
+
 </project>
