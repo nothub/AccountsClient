@@ -17,4 +17,4 @@
 !/.github/**
 !/.editorconfig
 !/LICENSE
-!/README
+!/*.md

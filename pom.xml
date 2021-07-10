@@ -6,10 +6,10 @@
 
   <groupId>com.mojang.api</groupId>
   <artifactId>AccountsClient</artifactId>
-  <version>0.0.0-SNAPSHOT</version>
+  <version>INDEV</version>
 
   <name>${project.artifactId}</name>
-  <description>Java client for accessing Mojang's account/profile API</description>
+  <description>Updated Java client for accessing Mojang's account/profile API</description>
   <url>https://github.com/nothub/AccountsClient</url>
 
   <properties>
@@ -99,9 +99,9 @@
                   <version>[${java.version},)</version>
                 </requireJavaVersion>
                 <banDuplicatePomDependencyVersions/>
-                <!--<dependencyConvergence/>-->
+                <dependencyConvergence/>
                 <requireReleaseDeps/>
-                <!--<requireUpperBoundDeps/>-->
+                <requireUpperBoundDeps/>
               </rules>
               <fail>true</fail>
               <failFast>true</failFast>

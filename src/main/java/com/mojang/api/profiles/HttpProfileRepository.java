@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class HttpProfileRepository implements ProfileRepository {
 
@@ -60,6 +61,16 @@ public class HttpProfileRepository implements ProfileRepository {
         }
 
         return profiles.toArray(new Profile[0]);
+    }
+
+    @Override
+    public Profile findProfileByName(String name) {
+        throw new IllegalStateException("not implemented yet");
+    }
+
+    @Override
+    public Profile findProfileByUuid(UUID uuid) {
+        throw new IllegalStateException("not implemented yet");
     }
 
     private URL getProfilesUrl() throws MalformedURLException {

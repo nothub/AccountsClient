@@ -1,3 +1,4 @@
+```nbtt
                        .     _///_,
                      .      / ` ' '>
                        )   o'  __/_'>
@@ -15,6 +16,7 @@
                              __) \  \\___(_   __/.__,'
                    b'ger  ,((,-,__\  '", __\_/. __,'
                                        '"./_._._-'
+```
 
 This is the Java client lib used by Minecraft to interact with the newly deployed public API for handling accounts and profiles at Mojang.
 

@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.Proxy;
 import java.net.URL;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /*
     TODO: refactor so unit tests can be written :)
@@ -51,15 +52,20 @@ public class BasicHttpClient implements HttpClient {
         writer.close();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String line;
-        StringBuilder response = new StringBuilder();
-
-        while ((line = reader.readLine()) != null) {
-            response.append(line);
-            response.append('\r');
-        }
+        String response = reader.lines().collect(Collectors.joining(System.lineSeparator()));
 
         reader.close();
-        return response.toString();
+        return response;
     }
+
+    @Override
+    public String get(URL url, List<HttpHeader> headers) throws IOException {
+        throw new IllegalStateException("not implemented yet");
+    }
+
+    @Override
+    public String get(URL url, Proxy proxy, List<HttpHeader> headers) throws IOException {
+        throw new IllegalStateException("not implemented yet");
+    }
+
 }

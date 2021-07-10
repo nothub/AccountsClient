@@ -8,4 +8,6 @@ import java.util.List;
 public interface HttpClient {
     String post(URL url, HttpBody body, List<HttpHeader> headers) throws IOException;
     String post(URL url, Proxy proxy, HttpBody body, List<HttpHeader> headers) throws IOException;
+    String get(URL url, List<HttpHeader> headers) throws IOException;
+    String get(URL url, Proxy proxy, List<HttpHeader> headers) throws IOException;
 }
