@@ -9,10 +9,7 @@ import com.mojang.api.http.HttpHeader;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class HttpProfileRepository implements ProfileRepository {
 
@@ -33,14 +30,14 @@ public class HttpProfileRepository implements ProfileRepository {
     }
 
     @Override
-    public Profile[] findProfilesByNames(String... names) {
+    public List<Profile> findProfilesByNames(List<String> names) {
         List<Profile> profiles = new ArrayList<>();
         try {
 
             List<HttpHeader> headers = new ArrayList<>();
             headers.add(new HttpHeader("Content-Type", "application/json"));
 
-            int namesCount = names.length;
+            int namesCount = names.size();
             int start = 0;
             int i = 0;
             do {
@@ -48,7 +45,7 @@ public class HttpProfileRepository implements ProfileRepository {
                 if (end > namesCount) {
                     end = namesCount;
                 }
-                String[] namesBatch = Arrays.copyOfRange(names, start, end);
+                List<String> namesBatch = names.subList(start, end);
                 HttpBody body = getHttpBody(namesBatch);
                 Profile[] result = post(getProfilesUrl(), body, headers);
                 profiles.addAll(Arrays.asList(result));
@@ -58,24 +55,69 @@ public class HttpProfileRepository implements ProfileRepository {
             } while (start < namesCount);
         } catch (Exception e) {
             // TODO: logging and allowing consumer to react?
+            System.err.println(e.getMessage());
         }
 
-        return profiles.toArray(new Profile[0]);
+        return profiles;
+    }
+
+    @Override
+    public Profile[] findProfilesByNames(String... names) {
+        return findProfilesByNames(Arrays.asList(names)).toArray(new Profile[0]);
     }
 
     @Override
     public Profile findProfileByName(String name) {
-        throw new IllegalStateException("not implemented yet");
+        try {
+            return get(getProfileUrl(name));
+        } catch (Exception e) {
+            // TODO: logging and allowing consumer to react?
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public Profile findProfileByUuid(String uuid) {
+        try {
+            return get(getProfileUuidUrl(uuid));
+        } catch (Exception e) {
+            // TODO: logging and allowing consumer to react?
+            System.err.println(e.getMessage());
+        }
+        return null;
     }
 
     @Override
     public Profile findProfileByUuid(UUID uuid) {
-        throw new IllegalStateException("not implemented yet");
+        return findProfileByUuid(uuid.toString());
     }
 
     private URL getProfilesUrl() throws MalformedURLException {
         // To lookup Minecraft profiles, agent should be "minecraft"
+        // URL for POST requests
         return new URL("https://api.mojang.com/profiles/" + agent);
+    }
+
+    private URL getProfileUrl(String name) throws MalformedURLException {
+        // To lookup Minecraft profiles, agent should be "minecraft"
+        // URL for GET requests
+        return new URL("https://api.mojang.com/users/profiles/" + agent + "/" + name);
+    }
+
+    private URL getProfileUuidUrl(String uuid) throws MalformedURLException {
+        // To lookup Minecraft profiles, agent should be "minecraft"
+        // URL for GET requests
+        return new URL("https://api.mojang.com/user/profile/" + uuid);
+    }
+
+    private Profile get(URL url) throws IOException {
+        return get(url, Collections.emptyList());
+    }
+
+    private Profile get(URL url, List<HttpHeader> headers) throws IOException {
+        String response = client.get(url, headers);
+        return gson.fromJson(response, Profile.class);
     }
 
     private Profile[] post(URL url, HttpBody body, List<HttpHeader> headers) throws IOException {
@@ -83,7 +125,8 @@ public class HttpProfileRepository implements ProfileRepository {
         return gson.fromJson(response, Profile[].class);
     }
 
-    private static HttpBody getHttpBody(String... namesBatch) {
+    private static HttpBody getHttpBody(List<String> namesBatch) {
         return new HttpBody(gson.toJson(namesBatch));
     }
+
 }

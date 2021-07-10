@@ -18,12 +18,11 @@ import static org.mockito.Mockito.when;
 
 public class HttpProfileRepositoryTests {
 
-    private HttpClient client;
-    private Gson gson = new Gson();
+    private final Gson gson = new Gson();
 
     @Test
     public void findProfilesByCriteria_someProfileNames_returnsExpectedProfiles() throws Exception{
-        client = mock(HttpClient.class);
+        HttpClient client = mock(HttpClient.class);
         String someAgent = "someAgent";
 
         Profile someProfile = getProfile("someName");
@@ -42,7 +41,7 @@ public class HttpProfileRepositoryTests {
 
     private void setProfilesForUrl(HttpClient mock, URL url, Profile[] profiles) throws IOException {
         String jsonString = gson.toJson(profiles);
-        when(mock.post(eq(url), any(HttpBody.class), ArgumentMatchers.<HttpHeader>anyList())).thenReturn(jsonString);
+        when(mock.post(eq(url), any(HttpBody.class), ArgumentMatchers.anyList())).thenReturn(jsonString);
     }
 
     private static Profile getProfile(String name) {
