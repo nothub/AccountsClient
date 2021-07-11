@@ -1,16 +1,17 @@
-package com.mojang.api.profiles;
+package cc.neckbeard.mcapilib.profiles;
 
+import cc.neckbeard.mcapilib.http.HttpBody;
+import cc.neckbeard.mcapilib.http.HttpClient;
 import com.google.gson.Gson;
-import com.mojang.api.http.HttpBody;
-import com.mojang.api.http.HttpClient;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.mojang.api.profiles.Endpoint.Post.USERNAMES_TO_UUID;
+import static cc.neckbeard.mcapilib.profiles.Endpoint.Post.USERNAMES_TO_UUID;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -20,7 +21,7 @@ public class HttpProfileRepositoryTests {
 
     private final Gson gson = new Gson();
 
-    private static Profile getProfile(String name) {
+    private static Profile getProfile(String name) throws MalformedURLException {
         return ((ProfileRepository) new HttpProfileRepository()).findProfileByName(name);
     }
 

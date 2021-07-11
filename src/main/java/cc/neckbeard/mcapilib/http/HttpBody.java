@@ -1,4 +1,4 @@
-package com.mojang.api.http;
+package cc.neckbeard.mcapilib.http;
 
 public class HttpBody {
 

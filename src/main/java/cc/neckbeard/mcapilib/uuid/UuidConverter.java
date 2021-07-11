@@ -1,4 +1,4 @@
-package com.mojang.api.uuid;
+package cc.neckbeard.mcapilib.uuid;
 
 import java.util.UUID;
 import java.util.regex.Pattern;

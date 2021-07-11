@@ -1,10 +1,10 @@
-package com.mojang.api.profiles;
+package cc.neckbeard.mcapilib.profiles;
 
-import com.google.gson.Gson;
-import com.mojang.api.http.BasicHttpClient;
-import com.mojang.api.http.HttpBody;
-import com.mojang.api.http.HttpClient;
-import com.mojang.api.http.HttpHeader;
+import cc.neckbeard.mcapilib.http.BasicHttpClient;
+import cc.neckbeard.mcapilib.http.HttpBody;
+import cc.neckbeard.mcapilib.http.HttpClient;
+import cc.neckbeard.mcapilib.http.HttpHeader;
+import cc.neckbeard.mcapilib.json.GSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-import static com.mojang.api.profiles.Endpoint.Get.*;
-import static com.mojang.api.profiles.Endpoint.Post.USERNAMES_TO_UUID;
+import static cc.neckbeard.mcapilib.profiles.Endpoint.Get.*;
+import static cc.neckbeard.mcapilib.profiles.Endpoint.Post.USERNAMES_TO_UUID;
 
 public class HttpProfileRepository implements ProfileRepository {
 
@@ -22,7 +22,6 @@ public class HttpProfileRepository implements ProfileRepository {
     // You're not allowed to request more than 100 profiles per go.
     private static final int PROFILES_PER_REQUEST = 100;
 
-    private static final Gson gson = new Gson();
     private final HttpClient client;
 
     public HttpProfileRepository() {
@@ -36,11 +35,9 @@ public class HttpProfileRepository implements ProfileRepository {
     @Override
     public List<Profile> findProfilesByNames(List<String> names) {
         List<Profile> profiles = new ArrayList<>();
+        List<HttpHeader> headers = new ArrayList<>();
+        headers.add(new HttpHeader("Content-Type", "application/json"));
         try {
-
-            List<HttpHeader> headers = new ArrayList<>();
-            headers.add(new HttpHeader("Content-Type", "application/json"));
-
             int namesCount = names.size();
             int start = 0;
             int i = 0;
@@ -56,12 +53,12 @@ public class HttpProfileRepository implements ProfileRepository {
 
                 start = end;
                 i++;
+
             } while (start < namesCount);
-        } catch (Exception e) {
+        } catch (IOException e) {
             // TODO: logging and allowing consumer to react?
             log.error(e.getMessage());
         }
-
         return profiles;
     }
 
@@ -74,7 +71,7 @@ public class HttpProfileRepository implements ProfileRepository {
     public Profile findProfileByName(String name) {
         try {
             return get(USERNAME_TO_UUID.url(name));
-        } catch (Exception e) {
+        } catch (IOException e) {
             // TODO: logging and allowing consumer to react?
             log.error(e.getMessage());
         }
@@ -85,7 +82,7 @@ public class HttpProfileRepository implements ProfileRepository {
     public Profile findProfileByUuid(String uuid) {
         try {
             return get(UUID_TO_USERNAME.url(uuid));
-        } catch (Exception e) {
+        } catch (IOException e) {
             // TODO: logging and allowing consumer to react?
             log.error(e.getMessage());
         }
@@ -101,7 +98,7 @@ public class HttpProfileRepository implements ProfileRepository {
     public Profile findProfileWithProperties(String uuid) {
         try {
             return getTextures(UUID_TO_PROFILE.url(uuid));
-        } catch (Exception e) {
+        } catch (IOException e) {
             // TODO: logging and allowing consumer to react?
             log.error(e.getMessage());
         }
@@ -119,21 +116,21 @@ public class HttpProfileRepository implements ProfileRepository {
 
     private Profile get(URL url, List<HttpHeader> headers) throws IOException {
         String response = client.get(url, headers);
-        return gson.fromJson(response, Profile.class);
+        return GSON.instance.fromJson(response, Profile.class);
     }
 
     private Profile getTextures(URL url) throws IOException {
         String response = client.get(url, Collections.emptyList());
-        return gson.fromJson(response, Profile.class);
+        return GSON.instance.fromJson(response, Profile.class);
     }
 
     private Profile[] post(URL url, HttpBody body, List<HttpHeader> headers) throws IOException {
         String response = client.post(url, body, headers);
-        return gson.fromJson(response, Profile[].class);
+        return GSON.instance.fromJson(response, Profile[].class);
     }
 
     private static HttpBody getHttpBody(List<String> namesBatch) {
-        return new HttpBody(gson.toJson(namesBatch));
+        return new HttpBody(GSON.instance.toJson(namesBatch));
     }
 
 }

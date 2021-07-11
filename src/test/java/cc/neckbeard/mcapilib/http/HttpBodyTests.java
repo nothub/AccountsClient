@@ -1,4 +1,4 @@
-package com.mojang.api.http;
+package cc.neckbeard.mcapilib.http;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

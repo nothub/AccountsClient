@@ -1,4 +1,4 @@
-package com.mojang.api.uuid;
+package cc.neckbeard.mcapilib.uuid;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

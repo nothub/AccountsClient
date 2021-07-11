@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.mojang.api</groupId>
-  <artifactId>AccountsClient</artifactId>
+  <groupId>cc.neckbeard.mcapilib</groupId>
+  <artifactId>McApiLib</artifactId>
   <version>INDEV-SNAPSHOT</version>
 
   <name>${project.artifactId}</name>
-  <description>Updated Java client for accessing Mojang's account/profile API</description>
+  <description>Updated Java library for accessing Mojang's account/profile API</description>
   <url>https://github.com/nothub/AccountsClient</url>
 
   <properties>

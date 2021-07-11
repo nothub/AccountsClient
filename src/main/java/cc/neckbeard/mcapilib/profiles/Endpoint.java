@@ -1,11 +1,12 @@
-package com.mojang.api.profiles;
+package cc.neckbeard.mcapilib.profiles;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public enum Endpoint {
-;
-    public enum Get{
+    ;
+
+    public enum Get {
 
         USERNAME_TO_UUID("https://api.mojang.com/users/profiles/minecraft/"),
         UUID_TO_USERNAME("https://api.mojang.com/user/profile/"),
@@ -18,12 +19,8 @@ public enum Endpoint {
             this.url = url;
         }
 
-        public URL url(String value) {
-            try {
-                return new URL(url + value);
-            } catch (MalformedURLException e) {
-                throw new IllegalStateException("Someone broke the internet! Not a valid URL: " + url + value);
-            }
+        public URL url(String value) throws MalformedURLException {
+            return new URL(url + value);
         }
 
     }
