@@ -1,82 +1,53 @@
 package cc.neckbeard.mcapilib.profiles;
 
-import java.net.URL;
+import cc.neckbeard.mcapilib.http.BasicHttpClient;
+import cc.neckbeard.mcapilib.json.GSON;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import static cc.neckbeard.mcapilib.profiles.Endpoint.Get.UUID_TO_NAMEHISTORY;
+import static cc.neckbeard.mcapilib.profiles.Endpoint.Get.UUID_TO_PROFILE;
 
 public class Profile {
 
     public final String id;
     public final String name;
-    public final URL skin;
-    public final URL cape;
     public final boolean legacy;
 
-    public Profile(String id, String name, URL skin, URL cape, boolean legacy) {
+    private Textures textures;
+    private List<Name> nameHistory;
+
+    public Profile(String id, String name, boolean legacy) {
         this.id = id;
         this.name = name;
-        this.skin = skin;
-        this.cape = cape;
         this.legacy = legacy;
+        this.textures = null;
+        this.nameHistory = null;
     }
 
-    public String getId() {
-        // backward compatibility
-        return id;
+    public Textures getTextures() {
+        if (textures != null) return textures;
+        try {
+            textures = GSON.instance.fromJson(
+                BasicHttpClient.getInstance().get(UUID_TO_PROFILE.url(id), Collections.emptyList()), Textures.class);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return textures;
     }
 
-    public String getName() {
-        // backward compatibility
-        return name;
-    }
-
-    public enum SkinModel {
-        STANDARD,
-        SLIM
-    }
-
-    public static final class Builder {
-
-        private String id;
-        private String name;
-        private URL skin;
-        private URL cape;
-        private boolean legacy;
-
-        private Builder() {
+    public List<Name> getNameHistory() {
+        if (nameHistory != null) return nameHistory;
+        try {
+            nameHistory = Arrays.asList(GSON.instance.fromJson(
+                BasicHttpClient.getInstance().get(UUID_TO_NAMEHISTORY.url(id), Collections.emptyList()), Name[].class));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-
-        public static Builder getInstance() {
-            return new Builder();
-        }
-
-        public Builder id(String id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder skin(URL skin) {
-            this.skin = skin;
-            return this;
-        }
-
-        public Builder cape(URL cape) {
-            this.cape = cape;
-            return this;
-        }
-
-        public Builder legacy() {
-            this.legacy = true;
-            return this;
-        }
-
-        public Profile build() {
-            return new Profile(id, name, skin, cape, legacy);
-        }
-
+        return nameHistory;
     }
 
 }

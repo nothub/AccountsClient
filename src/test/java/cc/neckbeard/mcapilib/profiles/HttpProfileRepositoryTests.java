@@ -44,8 +44,8 @@ public class HttpProfileRepositoryTests {
         Profile[] actual = repository.findProfilesByNames("mollstam", "KrisJelbring");
 
         Assertions.assertEquals(2, actual.length);
-        Assertions.assertEquals("mollstam", actual[0].getName());
-        Assertions.assertEquals("KrisJelbring", actual[1].getName());
+        Assertions.assertEquals("mollstam", actual[0].name);
+        Assertions.assertEquals("KrisJelbring", actual[1].name);
     }
 
 }

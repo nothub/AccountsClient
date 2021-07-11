@@ -94,33 +94,12 @@ public class HttpProfileRepository implements ProfileRepository {
         return findProfileByUuid(uuid.toString());
     }
 
-    @Override
-    public Profile findProfileWithProperties(String uuid) {
-        try {
-            return getTextures(UUID_TO_PROFILE.url(uuid));
-        } catch (IOException e) {
-            // TODO: logging and allowing consumer to react?
-            log.error(e.getMessage());
-        }
-        return null;
-    }
-
-    @Override
-    public Profile findProfileWithProperties(UUID uuid) {
-        return findProfileWithProperties(uuid.toString());
-    }
-
     private Profile get(URL url) throws IOException {
         return get(url, Collections.emptyList());
     }
 
     private Profile get(URL url, List<HttpHeader> headers) throws IOException {
         String response = client.get(url, headers);
-        return GSON.instance.fromJson(response, Profile.class);
-    }
-
-    private Profile getTextures(URL url) throws IOException {
-        String response = client.get(url, Collections.emptyList());
         return GSON.instance.fromJson(response, Profile.class);
     }
 

@@ -1,3 +1,26 @@
+# McApiLib
+
+This is an updated fork of [Mojang/AccountsClient](https://github.com/Mojang/AccountsClient), a Java client library used to interact with the public API for handling Minecraft accounts and profiles at Mojang.
+
+---
+
+The library api is not stable and currently provides the following functionality:
+
+|||
+| --- | --- |
+| Lookup multiple profiles by name | `ProfileRepository.findProfilesByNames(String...) -> Profile[]` |
+| Lookup multiple profiles by name | `ProfileRepository.findProfilesByNames(List<String>) -> List<Profile>` |
+| Lookup profile by name           | `ProfileRepository.findProfileByName(String) -> Profile` |
+| Lookup profile by uuid           | `ProfileRepository.findProfileByUuid(String) -> Profile` |
+| Lookup profile by uuid           | `ProfileRepository.findProfileByUuid(UUID) -> Profile` |
+| Lookup skin, model & textures    | `Profile.getTextures() -> Textures` |
+| Lookup name history by uuid      | `Profile.getNameHistory() -> List<Name>` |
+
+The only documentation is the code and this readme.
+(The projects namespace was changed to avoid collision.)
+
+---
+
 ```nbtt
                        .     _///_,
                      .      / ` ' '>
@@ -17,27 +40,5 @@
                    b'ger  ,((,-,__\  '", __\_/. __,'
                                        '"./_._._-'
 ```
-
-This is a Java client library used to interact with the public API for handling Minecraft accounts and profiles at Mojang.
-
-This is an updated fork of the [original project](https://github.com/Mojang/AccountsClient).
-
-The library api is not stable and currently provides the following functionality:
-
-|||
-| --- | --- |
-| Lookup multiple profiles by name | `Profile[] findProfilesByNames(String...)`        |
-| Lookup multiple profiles by name | `List<Profile> findProfilesByNames(List<String>)` |
-| Lookup profile by name | `Profile findProfileByName(String)`               |
-| Lookup profile by uuid | `Profile findProfileByUuid(String)`               |
-| Lookup profile by uuid | `Profile findProfileByUuid(UUID)`                 |
-| Lookup skin & cape by name | `Profile findProfileWithProperties(String)`       |
-| Lookup skin & cape by uuid | `Profile findProfileWithProperties(UUID)`         |
-
-(The projects namespace was changed to avoid collision.)
-
----
-
-The only documentation is the code, and if you find something particularly weird it's probably a combination between not wanting to introduce unnecessary dependencies to Minecraft and not going overkill.
 
 This code was provided as a courtesy by Mojang, feel free to build a client in another language to share with the community.

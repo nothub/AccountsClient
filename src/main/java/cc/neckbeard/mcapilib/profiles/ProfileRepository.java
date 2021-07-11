@@ -10,6 +10,4 @@ public interface ProfileRepository {
     Profile findProfileByName(String name) throws MalformedURLException;
     Profile findProfileByUuid(String uuid);
     Profile findProfileByUuid(UUID uuid);
-    Profile findProfileWithProperties(String uuid);
-    Profile findProfileWithProperties(UUID uuid);
 }

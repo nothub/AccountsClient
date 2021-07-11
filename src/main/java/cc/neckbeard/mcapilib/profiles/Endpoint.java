@@ -11,16 +11,24 @@ public enum Endpoint {
         USERNAME_TO_UUID("https://api.mojang.com/users/profiles/minecraft/"),
         UUID_TO_USERNAME("https://api.mojang.com/user/profile/"),
         UUID_TO_PROFILE("https://sessionserver.mojang.com/session/minecraft/profile/"),
+        UUID_TO_NAMEHISTORY("https://api.mojang.com/user/profiles/", "/names"),
         ;
 
         private final String url;
+        private final String suffix;
 
         Get(String url) {
             this.url = url;
+            this.suffix = "";
+        }
+
+        Get(String url, String suffix) {
+            this.url = url;
+            this.suffix = suffix;
         }
 
         public URL url(String value) throws MalformedURLException {
-            return new URL(url + value);
+            return new URL(url + value + suffix);
         }
 
     }
