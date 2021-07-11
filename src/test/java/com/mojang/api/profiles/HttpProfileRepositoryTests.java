@@ -3,7 +3,6 @@ package com.mojang.api.profiles;
 import com.google.gson.Gson;
 import com.mojang.api.http.HttpBody;
 import com.mojang.api.http.HttpClient;
-import com.mojang.api.http.HttpHeader;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -11,6 +10,7 @@ import org.mockito.ArgumentMatchers;
 import java.io.IOException;
 import java.net.URL;
 
+import static com.mojang.api.profiles.Endpoint.Post.USERNAMES_TO_UUID;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -20,23 +20,8 @@ public class HttpProfileRepositoryTests {
 
     private final Gson gson = new Gson();
 
-    @Test
-    public void findProfilesByCriteria_someProfileNames_returnsExpectedProfiles() throws Exception{
-        HttpClient client = mock(HttpClient.class);
-        String someAgent = "someAgent";
-
-        Profile someProfile = getProfile("someName");
-        Profile someOtherProfile = getProfile("someOtherName");
-        Profile[] profiles = {someProfile, someOtherProfile};
-
-        setProfilesForUrl(client, new URL("https://api.mojang.com/profiles/" + someAgent), profiles);
-        ProfileRepository repository = new HttpProfileRepository(someAgent, client);
-
-        Profile[] actual = repository.findProfilesByNames("someName", "someOtherName");
-
-        Assertions.assertEquals(2, actual.length);
-        Assertions.assertEquals("someName", actual[0].getName());
-        Assertions.assertEquals("someOtherName", actual[1].getName());
+    private static Profile getProfile(String name) {
+        return ((ProfileRepository) new HttpProfileRepository()).findProfileByName(name);
     }
 
     private void setProfilesForUrl(HttpClient mock, URL url, Profile[] profiles) throws IOException {
@@ -44,10 +29,22 @@ public class HttpProfileRepositoryTests {
         when(mock.post(eq(url), any(HttpBody.class), ArgumentMatchers.anyList())).thenReturn(jsonString);
     }
 
-    private static Profile getProfile(String name) {
-        Profile profile = new Profile();
-        profile.setName(name);
-        return profile;
+    @Test
+    public void findProfilesByCriteria_someProfileNames_returnsExpectedProfiles() throws Exception{
+        HttpClient client = mock(HttpClient.class);
+
+        Profile someProfile = getProfile("mollstam");
+        Profile someOtherProfile = getProfile("KrisJelbring");
+        Profile[] profiles = {someProfile, someOtherProfile};
+
+        setProfilesForUrl(client, USERNAMES_TO_UUID.url(), profiles);
+        ProfileRepository repository = new HttpProfileRepository(client);
+
+        Profile[] actual = repository.findProfilesByNames("mollstam", "KrisJelbring");
+
+        Assertions.assertEquals(2, actual.length);
+        Assertions.assertEquals("mollstam", actual[0].getName());
+        Assertions.assertEquals("KrisJelbring", actual[1].getName());
     }
 
 }

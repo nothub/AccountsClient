@@ -9,4 +9,6 @@ public interface ProfileRepository {
     Profile findProfileByName(String name);
     Profile findProfileByUuid(String uuid);
     Profile findProfileByUuid(UUID uuid);
+    Profile findProfileWithProperties(String uuid);
+    Profile findProfileWithProperties(UUID uuid);
 }

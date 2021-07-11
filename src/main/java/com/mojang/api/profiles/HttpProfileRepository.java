@@ -5,27 +5,31 @@ import com.mojang.api.http.BasicHttpClient;
 import com.mojang.api.http.HttpBody;
 import com.mojang.api.http.HttpClient;
 import com.mojang.api.http.HttpHeader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
+import static com.mojang.api.profiles.Endpoint.Get.*;
+import static com.mojang.api.profiles.Endpoint.Post.USERNAMES_TO_UUID;
+
 public class HttpProfileRepository implements ProfileRepository {
+
+    private static final Logger log = LoggerFactory.getLogger("AccountsClient");
 
     // You're not allowed to request more than 100 profiles per go.
     private static final int PROFILES_PER_REQUEST = 100;
 
     private static final Gson gson = new Gson();
-    private final String agent;
     private final HttpClient client;
 
-    public HttpProfileRepository(String agent) {
-        this(agent, BasicHttpClient.getInstance());
+    public HttpProfileRepository() {
+        this(BasicHttpClient.getInstance());
     }
 
-    public HttpProfileRepository(String agent, HttpClient client) {
-        this.agent = agent;
+    public HttpProfileRepository(HttpClient client) {
         this.client = client;
     }
 
@@ -47,7 +51,7 @@ public class HttpProfileRepository implements ProfileRepository {
                 }
                 List<String> namesBatch = names.subList(start, end);
                 HttpBody body = getHttpBody(namesBatch);
-                Profile[] result = post(getProfilesUrl(), body, headers);
+                Profile[] result = post(USERNAMES_TO_UUID.url(), body, headers);
                 profiles.addAll(Arrays.asList(result));
 
                 start = end;
@@ -55,7 +59,7 @@ public class HttpProfileRepository implements ProfileRepository {
             } while (start < namesCount);
         } catch (Exception e) {
             // TODO: logging and allowing consumer to react?
-            System.err.println(e.getMessage());
+            log.error(e.getMessage());
         }
 
         return profiles;
@@ -69,10 +73,10 @@ public class HttpProfileRepository implements ProfileRepository {
     @Override
     public Profile findProfileByName(String name) {
         try {
-            return get(getProfileUrl(name));
+            return get(USERNAME_TO_UUID.url(name));
         } catch (Exception e) {
             // TODO: logging and allowing consumer to react?
-            System.err.println(e.getMessage());
+            log.error(e.getMessage());
         }
         return null;
     }
@@ -80,10 +84,10 @@ public class HttpProfileRepository implements ProfileRepository {
     @Override
     public Profile findProfileByUuid(String uuid) {
         try {
-            return get(getProfileUuidUrl(uuid));
+            return get(UUID_TO_USERNAME.url(uuid));
         } catch (Exception e) {
             // TODO: logging and allowing consumer to react?
-            System.err.println(e.getMessage());
+            log.error(e.getMessage());
         }
         return null;
     }
@@ -93,22 +97,20 @@ public class HttpProfileRepository implements ProfileRepository {
         return findProfileByUuid(uuid.toString());
     }
 
-    private URL getProfilesUrl() throws MalformedURLException {
-        // To lookup Minecraft profiles, agent should be "minecraft"
-        // URL for POST requests
-        return new URL("https://api.mojang.com/profiles/" + agent);
+    @Override
+    public Profile findProfileWithProperties(String uuid) {
+        try {
+            return getTextures(UUID_TO_PROFILE.url(uuid));
+        } catch (Exception e) {
+            // TODO: logging and allowing consumer to react?
+            log.error(e.getMessage());
+        }
+        return null;
     }
 
-    private URL getProfileUrl(String name) throws MalformedURLException {
-        // To lookup Minecraft profiles, agent should be "minecraft"
-        // URL for GET requests
-        return new URL("https://api.mojang.com/users/profiles/" + agent + "/" + name);
-    }
-
-    private URL getProfileUuidUrl(String uuid) throws MalformedURLException {
-        // To lookup Minecraft profiles, agent should be "minecraft"
-        // URL for GET requests
-        return new URL("https://api.mojang.com/user/profile/" + uuid);
+    @Override
+    public Profile findProfileWithProperties(UUID uuid) {
+        return findProfileWithProperties(uuid.toString());
     }
 
     private Profile get(URL url) throws IOException {
@@ -117,6 +119,11 @@ public class HttpProfileRepository implements ProfileRepository {
 
     private Profile get(URL url, List<HttpHeader> headers) throws IOException {
         String response = client.get(url, headers);
+        return gson.fromJson(response, Profile.class);
+    }
+
+    private Profile getTextures(URL url) throws IOException {
+        String response = client.get(url, Collections.emptyList());
         return gson.fromJson(response, Profile.class);
     }
 
