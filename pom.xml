@@ -6,7 +6,7 @@
 
   <groupId>cc.neckbeard.mcapilib</groupId>
   <artifactId>McApiLib</artifactId>
-  <version>INDEV-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
 
   <name>${project.artifactId}</name>
   <description>Updated Java library for accessing Mojang's account/profile API</description>
