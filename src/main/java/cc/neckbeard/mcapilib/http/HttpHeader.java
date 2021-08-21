@@ -1,6 +1,7 @@
 package cc.neckbeard.mcapilib.http;
 
 public class HttpHeader {
+
     private String name;
     private String value;
 
@@ -24,4 +25,5 @@ public class HttpHeader {
     public void setValue(String value) {
         this.value = value;
     }
+
 }

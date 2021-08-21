@@ -10,9 +10,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/*
-    TODO: refactor so unit tests can be written :)
- */
 public class BasicHttpClient implements HttpClient {
 
     private static BasicHttpClient instance;
