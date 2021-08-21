@@ -4,7 +4,7 @@ This is an updated fork of [Mojang/AccountsClient](https://github.com/Mojang/Acc
 
 ---
 
-The library api is not stable and currently provides the following functionality:
+The library provides the following functionality:
 
 |||
 | --- | --- |

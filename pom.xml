@@ -9,7 +9,7 @@
   <version>1.0.0</version>
 
   <name>${project.artifactId}</name>
-  <description>Updated Java library for accessing Mojang's account/profile API</description>
+  <description>Java library for accessing Mojang's account/profile API</description>
   <url>https://github.com/nothub/McApiLib</url>
 
   <properties>
