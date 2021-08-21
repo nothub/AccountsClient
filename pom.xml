@@ -6,11 +6,11 @@
 
   <groupId>cc.neckbeard.mcapilib</groupId>
   <artifactId>McApiLib</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.0</version>
 
   <name>${project.artifactId}</name>
   <description>Updated Java library for accessing Mojang's account/profile API</description>
-  <url>https://github.com/nothub/AccountsClient</url>
+  <url>https://github.com/nothub/McApiLib</url>
 
   <properties>
     <java.version>1.8</java.version>
@@ -21,6 +21,7 @@
     <slf4j.version>1.7.32</slf4j.version>
     <junit.version>5.8.0-RC1</junit.version>
     <mockito.version>3.12.0</mockito.version>
+    <java-utils.version>1.4.1</java-utils.version>
   </properties>
 
   <dependencies>
@@ -44,7 +45,7 @@
       <version>${slf4j.version}</version>
       <scope>test</scope>
     </dependency>
-    <!-- test -->
+    <!-- tests -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
@@ -55,6 +56,12 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>cc.neckbeard</groupId>
+      <artifactId>java-utils</artifactId>
+      <version>${java-utils.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

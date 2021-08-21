@@ -1,6 +1,6 @@
 # McApiLib
 
-This is an updated fork of [Mojang/AccountsClient](https://github.com/Mojang/AccountsClient), a Java client library used to interact with the public API for handling Minecraft accounts and profiles at Mojang.
+This is an updated fork of [Mojang/AccountsClient](https://github.com/Mojang/AccountsClient), a Java library used to interact with the public API for handling Minecraft accounts and profiles at Mojang.
 
 ---
 

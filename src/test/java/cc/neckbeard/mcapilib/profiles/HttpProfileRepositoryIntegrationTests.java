@@ -1,8 +1,7 @@
 package cc.neckbeard.mcapilib.profiles;
 
 
-import cc.neckbeard.mcapilib.uuid.UuidConverter;
-import cc.neckbeard.mcapilib.uuid.UuidException;
+import cc.neckbeard.utils.UuidConverter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -48,7 +47,7 @@ public class HttpProfileRepositoryIntegrationTests {
     }
 
     @Test
-    public void findProfileByUuid_existingNameProvided_returnsProfile() throws UuidException {
+    public void findProfileByUuid_existingNameProvided_returnsProfile() {
         ProfileRepository repository = new HttpProfileRepository();
         final String uuid = "7125ba8b1c864508b92bb5c042ccfe2b";
 
@@ -140,7 +139,7 @@ public class HttpProfileRepositoryIntegrationTests {
     }
 
     @Test
-    public void findProfileByUuid_nonExistingUuidProvided_returnsNull() throws UuidException {
+    public void findProfileByUuid_nonExistingUuidProvided_returnsNull() {
         ProfileRepository repository = new HttpProfileRepository();
         Assertions.assertNull(repository.findProfileByUuid(UuidConverter.of("000b6e11683e4921b4738a8429e51000")));
     }
