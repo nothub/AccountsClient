@@ -41,4 +41,4 @@ The only documentation is the code and this readme.
                                        '"./_._._-'
 ```
 
-This code was provided as a courtesy by Mojang, feel free to build a client in another language to share with the community.
+This code was partially provided as a courtesy by Mojang, feel free to build a client in another language to share with the community.
