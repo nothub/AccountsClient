@@ -19,8 +19,6 @@ The library provides the following functionality:
 The only documentation is the code and this readme.
 (The projects namespace was changed to avoid collision.)
 
-Example usage:
-
 ---
 
 ```java
