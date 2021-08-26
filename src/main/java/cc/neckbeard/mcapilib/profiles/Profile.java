@@ -17,6 +17,8 @@ public class Profile {
     public final String name;
     public final boolean legacy;
 
+    private final BasicHttpClient httpClient;
+
     private Textures textures;
     private List<Name> nameHistory;
 
@@ -26,13 +28,14 @@ public class Profile {
         this.legacy = legacy;
         this.textures = null;
         this.nameHistory = null;
+        this.httpClient = new BasicHttpClient();
     }
 
     public Textures getTextures() {
         if (textures != null) return textures;
         try {
             textures = GSON.get().fromJson(
-                BasicHttpClient.getInstance().get(UUID_TO_PROFILE.url(id), Collections.emptyList()), Textures.class);
+                httpClient.get(UUID_TO_PROFILE.url(id), Collections.emptyList()), Textures.class);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -43,7 +46,7 @@ public class Profile {
         if (nameHistory != null) return nameHistory;
         try {
             nameHistory = Arrays.asList(GSON.get().fromJson(
-                BasicHttpClient.getInstance().get(UUID_TO_NAMEHISTORY.url(id), Collections.emptyList()), Name[].class));
+                httpClient.get(UUID_TO_NAMEHISTORY.url(id), Collections.emptyList()), Name[].class));
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

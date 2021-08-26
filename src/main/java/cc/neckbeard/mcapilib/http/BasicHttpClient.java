@@ -12,16 +12,7 @@ import java.util.stream.Collectors;
 
 public class BasicHttpClient implements HttpClient {
 
-    private static BasicHttpClient instance;
-
-    private BasicHttpClient() {
-    }
-
-    public static BasicHttpClient getInstance() {
-        if (instance == null) {
-            instance = new BasicHttpClient();
-        }
-        return instance;
+    public BasicHttpClient() {
     }
 
     @Override

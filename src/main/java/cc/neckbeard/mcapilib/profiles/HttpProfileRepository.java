@@ -25,7 +25,7 @@ public class HttpProfileRepository implements ProfileRepository {
     private final HttpClient client;
 
     public HttpProfileRepository() {
-        this(BasicHttpClient.getInstance());
+        this(new BasicHttpClient());
     }
 
     public HttpProfileRepository(HttpClient client) {
