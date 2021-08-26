@@ -19,6 +19,20 @@ The library provides the following functionality:
 The only documentation is the code and this readme.
 (The projects namespace was changed to avoid collision.)
 
+Example usage:
+
+---
+
+```java
+public class Foo {
+    public void find() {
+        ProfileRepository repo = new HttpProfileRepository();
+        CompletableFuture.supplyAsync(() -> repo.findProfileByName("CPacketAnimation"))
+                         .thenAccept(profile -> System.out.println(profile.getNameHistory()));
+    }
+}
+```
+
 ---
 
 ```nbtt
