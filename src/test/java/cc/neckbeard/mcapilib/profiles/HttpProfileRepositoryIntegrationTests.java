@@ -108,6 +108,7 @@ public class HttpProfileRepositoryIntegrationTests {
 
     @Test
     public void findProfilesByNames_nonExistingNameProvided_returnsEmptyArray() {
+        System.out.println("This test should log a HTTP response code 400 as error.");
         ProfileRepository repository = new HttpProfileRepository();
 
         Profile[] profiles = repository.findProfilesByNames("doesnotexist$*not even legal");
@@ -117,6 +118,7 @@ public class HttpProfileRepositoryIntegrationTests {
 
     @Test
     public void findProfilesByNames_List_nonExistingNameProvided_returnsEmptyArray() {
+        System.out.println("This test should log a HTTP response code 400 as error.");
         ProfileRepository repository = new HttpProfileRepository();
 
         List<String> list = new ArrayList<>();
@@ -128,6 +130,7 @@ public class HttpProfileRepositoryIntegrationTests {
 
     @Test
     public void findProfileByName_nonExistingNameProvided_returnsNull() throws MalformedURLException {
+        System.out.println("This test should log a HTTP response code 400 as error.");
         ProfileRepository repository = new HttpProfileRepository();
         Assertions.assertNull(repository.findProfileByName("doesnotexist$*not even legal"));
     }

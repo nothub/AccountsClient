@@ -7,7 +7,11 @@ import com.google.gson.GsonBuilder;
 
 public class GSON {
 
-    public static final Gson instance = build();
+    private static final ThreadLocal<Gson> gson = ThreadLocal.withInitial(GSON::build);
+
+    public static Gson get() {
+        return gson.get();
+    }
 
     private static Gson build() {
         GsonBuilder builder = new GsonBuilder();

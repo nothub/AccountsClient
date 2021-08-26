@@ -31,7 +31,7 @@ public class Profile {
     public Textures getTextures() {
         if (textures != null) return textures;
         try {
-            textures = GSON.instance.fromJson(
+            textures = GSON.get().fromJson(
                 BasicHttpClient.getInstance().get(UUID_TO_PROFILE.url(id), Collections.emptyList()), Textures.class);
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -42,7 +42,7 @@ public class Profile {
     public List<Name> getNameHistory() {
         if (nameHistory != null) return nameHistory;
         try {
-            nameHistory = Arrays.asList(GSON.instance.fromJson(
+            nameHistory = Arrays.asList(GSON.get().fromJson(
                 BasicHttpClient.getInstance().get(UUID_TO_NAMEHISTORY.url(id), Collections.emptyList()), Name[].class));
         } catch (IOException e) {
             System.out.println(e.getMessage());

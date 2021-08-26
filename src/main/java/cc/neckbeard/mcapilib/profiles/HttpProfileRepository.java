@@ -100,16 +100,16 @@ public class HttpProfileRepository implements ProfileRepository {
 
     private Profile get(URL url, List<HttpHeader> headers) throws IOException {
         String response = client.get(url, headers);
-        return GSON.instance.fromJson(response, Profile.class);
+        return GSON.get().fromJson(response, Profile.class);
     }
 
     private Profile[] post(URL url, HttpBody body, List<HttpHeader> headers) throws IOException {
         String response = client.post(url, body, headers);
-        return GSON.instance.fromJson(response, Profile[].class);
+        return GSON.get().fromJson(response, Profile[].class);
     }
 
     private static HttpBody getHttpBody(List<String> namesBatch) {
-        return new HttpBody(GSON.instance.toJson(namesBatch));
+        return new HttpBody(GSON.get().toJson(namesBatch));
     }
 
 }
