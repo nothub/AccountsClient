@@ -18,7 +18,7 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <gson.version>2.8.9</gson.version>
-    <slf4j.version>1.7.33</slf4j.version>
+    <slf4j.version>1.7.35</slf4j.version>
     <junit.version>5.8.2</junit.version>
     <mockito.version>3.12.4</mockito.version>
     <java-utils.version>1.4.1</java-utils.version>
